@@ -141,7 +141,7 @@ public:
 	// - returns: a Point, representing our private spawnLoc
 	Point getSpawnLoc();
 
-//private:  // This is commented out to allow us to test. 
+private:  // This is commented out to allow us to test. 
 
 	// Determine if a given Point is a valid grid location
 	// - param 1: a Point object
