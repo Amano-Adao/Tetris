@@ -82,6 +82,10 @@ bool Gameboard::isValidPoint(int x, int y) const {
 	return false;
 }
 
+Point Gameboard::getSpawnLoc() const{
+	return spawnLoc;
+}
+
 // get the content at a given point 
 // assert the point is valid (use isValidPoint())
 // - param 1: a Point (the XY of the content weant to retrieve)

@@ -1,5 +1,3 @@
-
-
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "TetrisGame.h"
@@ -8,6 +6,7 @@
 
 int main()
 {	
+	srand(time(0));
 	// run some sanity tests on our classes to ensure they're working as expected.
 	TestSuite::runTestSuite();
 

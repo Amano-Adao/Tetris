@@ -92,6 +92,9 @@ public:
 	// - return: nothing
 	void printToConsole() const;
 
+	// get the spawnloc of gameboard
+	Point getSpawnLoc() const;
+
 	// get the content at a given point 
 	// assert the point is valid (use isValidPoint())
 	// - param 1: a Point (the XY of the content weant to retrieve)
