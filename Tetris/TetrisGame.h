@@ -172,7 +172,7 @@ private:
 	// param 3: int yOffset
 	// param 4: TetColor color
 	// return: nothing
-	void drawBlock(Point& topLeft, int xOffset, int yOffset);
+	void drawBlock(Point& topLeft, int xOffset, int yOffset, TetColor color);
 										
 	// Draw the gameboard blocks on the window
 	//   Iterate through each row & col, use drawBlock() to 

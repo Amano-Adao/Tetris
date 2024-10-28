@@ -7,6 +7,7 @@ enum class TetShape { S, Z, L, J, O, I, T };
 class Tetromino
 {
 	// FRIENDS
+	friend class GridTetromino;
 	friend class TestSuite;// (allows TestSuite access to private members for testing)
 	
 private:

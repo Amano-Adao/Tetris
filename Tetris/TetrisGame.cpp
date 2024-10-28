@@ -1,5 +1,10 @@
 #include "TetrisGame.h"
 
+// STATIC CONSTANTS
+const int TetrisGame::BLOCK_WIDTH{ 32 };
+const int TetrisGame::BLOCK_HEIGHT{ 32 };
+const double TetrisGame::MAX_SECONDS_PER_TICK{ 0.75 };
+const double TetrisGame::MIN_SECONDS_PER_TICK{ 0.20 };
 // MEMBER FUNCTIONS
 
 // constructor
@@ -8,7 +13,8 @@
 //   load font from file: fonts/RedOctober.ttf
 //   setup scoreText
 // - params: already specified
-TetrisGame::TetrisGame(sf::RenderWindow& window, sf::Sprite& blockSprite, const Point& gameboardOffset, const Point& nextShapeOffset) {
+TetrisGame::TetrisGame(sf::RenderWindow& window, sf::Sprite& blockSprite, const Point& gameboardOffset, const Point& nextShapeOffset) : window{ window }, blockSprite{ blockSprite }, gameboardOffset{ gameboardOffset }, nextShapeOffset{ nextShapeOffset } {
+	
 
 }
 
@@ -17,18 +23,24 @@ TetrisGame::TetrisGame(sf::RenderWindow& window, sf::Sprite& blockSprite, const 
 //   called every game loop
 // - params: none
 // - return: nothing
-void TetrisGame::draw();
+void TetrisGame::draw() {
+
+}
 
 // Event and game loop processing
 // handles keypress events (up, left, right, down, space)
 // - param 1: sf::Event event
 // - return: nothing
-void TetrisGame::onKeyPressed(sf::Event keyPressed);
+void TetrisGame::onKeyPressed(sf::Event keyPressed) {
+
+}
 
 // called every game loop to handle ticks & tetromino placement (locking)
 // - param 1: float secondsSinceLastLoop
 // return: nothing
-void TetrisGame::processGameLoop(float secondsSinceLastLoop);
+void TetrisGame::processGameLoop(float secondsSinceLastLoop) {
+
+}
 
 // A tick() forces the currentShape to move (if there were no tick,
 // the currentShape would float in position forever). This should
@@ -36,7 +48,9 @@ void TetrisGame::processGameLoop(float secondsSinceLastLoop);
 // the currentShape (it can move no further).
 // - params: none
 // - return: nothing
-void TetrisGame::tick();
+void TetrisGame::tick() {
+
+}
 
 // reset everything for a new game (use existing functions) 
 //  - set the score to 0 and call updateScoreDisplay()
@@ -46,18 +60,24 @@ void TetrisGame::tick();
 //  - pick next shape again (for the "on-deck" shape)
 // - params: none
 // - return: nothing
-void TetrisGame::reset();
+void TetrisGame::reset() {
+
+}
 
 // assign nextShape.setShape a new random shape  
 // - params: none
 // - return: nothing
-void TetrisGame::pickNextShape();
+void TetrisGame::pickNextShape() {
+
+}
 
 // copy the nextShape into the currentShape (through assignment)
 //   position the currentShape to its spawn location.
 // - params: none
 // - return: bool, true/false based on isPositionLegal()
-bool TetrisGame::spawnNextShape();
+bool TetrisGame::spawnNextShape() {
+	return false;
+}
 
 // Test if a rotation is legal on the tetromino and if so, rotate it. 
 //  To accomplish this:
@@ -67,7 +87,11 @@ bool TetrisGame::spawnNextShape();
 //      if so - rotate the original tetromino.
 // - param 1: GridTetromino shape
 // - return: bool, true/false to indicate successful movement
-bool TetrisGame::attemptRotate(GridTetromino& shape);
+bool TetrisGame::attemptRotate(GridTetromino& shape) {
+	return false;
+}
+	
+
 
 // test if a move is legal on the tetromino, if so, move it.
 //  To do this:
@@ -79,13 +103,17 @@ bool TetrisGame::attemptRotate(GridTetromino& shape);
 // - param 2: int x;
 // - param 3: int y;
 // - return: true/false to indicate successful movement
-bool TetrisGame::attemptMove(GridTetromino& shape, int x, int y);
+bool TetrisGame::attemptMove(GridTetromino& shape, int x, int y) {
+	return false;
+}
 
 // drops the tetromino vertically as far as it can 
 //   legally go.  Use attemptMove(). This can be done in 1 line.
 // - param 1: GridTetromino shape
 // - return: nothing;
-void TetrisGame::drop(GridTetromino shape);
+void TetrisGame::drop(GridTetromino shape) {
+
+}
 
 // copy the contents (color) of the tetromino's mapped block locs to the grid.
 	//	 1) get the tetromino's mapped locs via tetromino.getBlockLocsMappedToGrid()
@@ -94,7 +122,9 @@ void TetrisGame::drop(GridTetromino shape);
 	//      to true
 	// - param 1: GridTetromino shape
 	// - return: nothing
-void TetrisGame::lock(GridTetromino shape);
+void TetrisGame::lock(GridTetromino shape) {
+
+}
 
 // Graphics methods ==============================================
 
@@ -115,14 +145,18 @@ void TetrisGame::lock(GridTetromino shape);
 // param 3: int yOffset
 // param 4: TetColor color
 // return: nothing
-void TetrisGame::drawBlock(Point& topLeft, int xOffset, int yOffset);
+void TetrisGame::drawBlock(Point& topLeft, int xOffset, int yOffset,TetColor color) {
+
+}
 
 // Draw the gameboard blocks on the window
 //   Iterate through each row & col, use drawBlock() to 
 //   draw a block if it isn't empty.
 // params: none
 // return: nothing
-void TetrisGame::drawGameboard();
+void TetrisGame::drawGameboard() {
+
+}
 
 // Draw a tetromino on the window
 //	 Iterate through each mapped loc & drawBlock() for each.
@@ -131,14 +165,18 @@ void TetrisGame::drawGameboard();
 // param 1: GridTetromino tetromino
 // param 2: Point topLeft
 // return: nothing
-void TetrisGame::drawTetromino(GridTetromino& tetromino, Point& topLeft);
+void TetrisGame::drawTetromino(GridTetromino& tetromino, Point& topLeft) {
+
+}
 
 // update the score display
 // form a string "score: ##" to display the current score
 // user scoreText.setString() to display it.
 // params: none:
 // return: nothing
-void TetrisGame::updateScoreDisplay();
+void TetrisGame::updateScoreDisplay() {
+
+}
 
 // State & gameplay/logic methods ================================
 
@@ -148,7 +186,9 @@ void TetrisGame::updateScoreDisplay();
 // - param 1: GridTetromino shape
 // - return: bool, true if shape is within borders (isWithinBorders()) and 
 //           the shape's mapped board locs are empty (false otherwise).
-bool TetrisGame::isPositionLegal(GridTetromino& shape) const;
+bool TetrisGame::isPositionLegal(GridTetromino& shape) const {
+	return false;
+}
 
 
 // Determine if the shape is within the left, right, & bottom gameboard borders
@@ -158,7 +198,9 @@ bool TetrisGame::isPositionLegal(GridTetromino& shape) const;
 // - param 1: GridTetromino shape
 // - return: bool, true if the shape is within the left, right, and lower border
 //	         of the grid, but *NOT* the top border (false otherwise)
-bool TetrisGame::isWithinBorders(GridTetromino& shape) const;
+bool TetrisGame::isWithinBorders(GridTetromino& shape) const {
+	return false;
+}
 
 
 // set secsPerTick 
@@ -166,4 +208,6 @@ bool TetrisGame::isWithinBorders(GridTetromino& shape) const;
 //   - advanced: base it on score (higher score results in lower secsPerTick)
 // params: none
 // return: nothing
-void TetrisGame::determineSecondsPerTick();
+void TetrisGame::determineSecondsPerTick() {
+
+}
