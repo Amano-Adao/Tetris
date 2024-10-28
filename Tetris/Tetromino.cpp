@@ -114,3 +114,9 @@ void Tetromino::rotateClockwise() {
 		p.multiplyY(-1);
 	}
 }
+TetShape Tetromino::getRandomShape() {
+	int tetShapeCount = static_cast<int>(TetShape::COUNT);
+	int randShapeNum = rand() % tetShapeCount;
+	TetShape randShape = static_cast<TetShape>(randShapeNum);
+	return randShape;
+}
