@@ -15,9 +15,10 @@ const double TetrisGame::MIN_SECONDS_PER_TICK{ 0.20 };
 //   setup scoreText
 // - params: already specified
 TetrisGame::TetrisGame(sf::RenderWindow& window, sf::Sprite& blockSprite, const Point& gameboardOffset, const Point& nextShapeOffset) : window{ window }, blockSprite{ blockSprite }, gameboardOffset{ gameboardOffset }, nextShapeOffset{ nextShapeOffset } {
+	/*currentShape.setShape(Tetromino::getRandomShape());
+	currentShape.setGridLoc(board.getSpawnLoc());*/
+	reset();
 	board.setContent(Gameboard::MAX_X / 2, Gameboard::MAX_Y / 2, 1);
-	currentShape.setShape(Tetromino::getRandomShape());
-	currentShape.setGridLoc(board.getSpawnLoc());
 }
 
 // Draw anything to do with the game,
@@ -49,7 +50,9 @@ void TetrisGame::onKeyPressed(sf::Event keyPressed) {
 		attemptMove(currentShape, 1, 0);
 		break;
 	case sf::Keyboard::Down:
-		attemptMove(currentShape, 0, 1);
+		if (!attemptMove(currentShape, 0, 1)) {
+			lock(currentShape);
+		};
 		break;
 	case sf::Keyboard::Space:
 		drop(currentShape);
@@ -65,7 +68,11 @@ void TetrisGame::onKeyPressed(sf::Event keyPressed) {
 // - param 1: float secondsSinceLastLoop
 // return: nothing
 void TetrisGame::processGameLoop(float secondsSinceLastLoop) {
-
+	secondsSinceLastTick += secondsSinceLastLoop;
+	if (secondsSinceLastTick > secondsPerTick) {
+		tick();
+		secondsSinceLastTick -= secondsPerTick;
+	}
 }
 
 // A tick() forces the currentShape to move (if there were no tick,
@@ -75,6 +82,10 @@ void TetrisGame::processGameLoop(float secondsSinceLastLoop) {
 // - params: none
 // - return: nothing
 void TetrisGame::tick() {
+	std::cout << "tick";
+	if (!attemptMove(currentShape, 0, 1)) {
+		lock(currentShape);
+	};
 
 }
 
@@ -87,14 +98,22 @@ void TetrisGame::tick() {
 // - params: none
 // - return: nothing
 void TetrisGame::reset() {
-
+	score = 0;
+	updateScoreDisplay();
+	determineSecondsPerTick();
+	board.empty();
+	pickNextShape();
+	spawnNextShape();
+	//pickNextShape();
+	
 }
 
 // assign nextShape.setShape a new random shape  
 // - params: none
 // - return: nothing
 void TetrisGame::pickNextShape() {
-
+	nextShape.setShape(Tetromino::getRandomShape());
+	nextShape.setGridLoc(board.getSpawnLoc());
 }
 
 // copy the nextShape into the currentShape (through assignment)
@@ -102,6 +121,11 @@ void TetrisGame::pickNextShape() {
 // - params: none
 // - return: bool, true/false based on isPositionLegal()
 bool TetrisGame::spawnNextShape() {
+	if (isPositionLegal(nextShape)) {
+		currentShape = nextShape;
+		currentShape.setGridLoc(board.getSpawnLoc());
+		return true;
+	}
 	return false;
 }
 
