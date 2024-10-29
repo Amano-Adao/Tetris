@@ -91,7 +91,7 @@ Point Gameboard::getSpawnLoc() const{
 // - param 1: a Point (the XY of the content weant to retrieve)
 // - return: an int, the content from the grid at the specified point 
 int Gameboard::getContent(const Point& p) const {
-	assert(isValidPoint(p));
+	//assert(isValidPoint(p));
 	//if (isValidPoint(p)) {
 		return grid[p.getY()][p.getX()];
 	//}
@@ -134,7 +134,6 @@ void Gameboard::setContent(int x, int y, int content) {
 // - param 1: a vector of Points representing locations
 // - param 2: an int representing the content we want to set.
 void Gameboard::setContent(std::vector<Point>& v, int content) {
-		
 	for (Point& p : v) {
 		setContent(p, content);
 	}
@@ -147,9 +146,9 @@ void Gameboard::setContent(std::vector<Point>& v, int content) {
 // Using invalid points to index into the grid would cause undefined behaviour. 
 // - param 1: a vector of Points representing locations to test
 // - return: true if the content at ALL VALID points is EMPTY_BLOCK, false otherwise
-bool Gameboard::areAllLocsEmpty(std::vector<Point>& v) const {
-	for (Point& p : v) {
-		if ((isValidPoint(p))&& (getContent(p) != EMPTY_BLOCK)) {
+bool Gameboard::areAllLocsEmpty(const std::vector<Point>& v) const {
+	for (const Point& p : v) {
+		if ((!isValidPoint(p))&& (getContent(p) == EMPTY_BLOCK)) {
 			return false;
 		}
 	}

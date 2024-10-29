@@ -108,14 +108,12 @@ bool TetrisGame::spawnNextShape() {
 // - param 1: GridTetromino shape
 // - return: bool, true/false to indicate successful movement
 bool TetrisGame::attemptRotate(GridTetromino& shape) {
-	/*GridTetromino t = shape;
-	t.rotateClockwise();*/
-
-	shape.rotateClockwise();
-	/*if (isPositionLegal(t)) {
+	GridTetromino temp = shape;
+	temp.rotateClockwise();
+	if (isPositionLegal(temp)) {
 		shape.rotateClockwise();
 		return true;
-	}*/
+	}
 	return false;
 }
 	
@@ -132,9 +130,11 @@ bool TetrisGame::attemptRotate(GridTetromino& shape) {
 // - param 3: int y;
 // - return: true/false to indicate successful movement
 bool TetrisGame::attemptMove(GridTetromino& shape, int x, int y) {
-	/*GridTetromino t = shape;
-	*/
-	shape.move(x, y);
+	GridTetromino temp = shape;
+	temp.move(x, y);
+	if (isPositionLegal(temp)) {
+		shape.move(x, y);
+	}
 	return false;
 }
 
@@ -206,7 +206,7 @@ void TetrisGame::drawGameboard() {
 // return: nothing
 void TetrisGame::drawTetromino(GridTetromino& tetromino, const Point& topLeft) {
 	for (Point& p : tetromino.getBlockLocsMappedToGrid()) {
-		drawBlock(topLeft, p.getX(), p.getY() , tetromino.getColor());     // whats the point of topleft
+		drawBlock(topLeft, p.getX(), p.getY() , tetromino.getColor());     // gridloc is added in getBlockLocsMapped function
 	}
 }
 
@@ -228,7 +228,9 @@ void TetrisGame::updateScoreDisplay() {
 // - return: bool, true if shape is within borders (isWithinBorders()) and 
 //           the shape's mapped board locs are empty (false otherwise).
 bool TetrisGame::isPositionLegal(GridTetromino& shape) const {
-
+	if (isWithinBorders(shape) && board.areAllLocsEmpty(shape.getBlockLocsMappedToGrid())) {
+		return true;
+	}  
 	return false;
 }
 
@@ -241,7 +243,12 @@ bool TetrisGame::isPositionLegal(GridTetromino& shape) const {
 // - return: bool, true if the shape is within the left, right, and lower border
 //	         of the grid, but *NOT* the top border (false otherwise)
 bool TetrisGame::isWithinBorders(GridTetromino& shape) const {
-	return false;
+	for (const Point& p : shape.getBlockLocsMappedToGrid()) {
+		if ((p.getX() < 0) || (p.getX() > board.MAX_X) || (p.getY() > board.MAX_Y)) {
+			return false;
+		}
+	}
+	return true;
 }
 
 
