@@ -142,7 +142,7 @@ private:
 	//   legally go.  Use attemptMove(). This can be done in 1 line.
 	// - param 1: GridTetromino shape
 	// - return: nothing;
-	void drop(GridTetromino shape);
+	void drop(GridTetromino& shape);
 
 	// copy the contents (color) of the tetromino's mapped block locs to the grid.
 		//	 1) get the tetromino's mapped locs via tetromino.getBlockLocsMappedToGrid()
@@ -151,7 +151,7 @@ private:
 		//      to true
 		// - param 1: GridTetromino shape
 		// - return: nothing
-	void lock(GridTetromino shape);
+	void lock(GridTetromino& shape);
 	
 	// Graphics methods ==============================================
 	

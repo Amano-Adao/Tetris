@@ -15,6 +15,7 @@ const double TetrisGame::MIN_SECONDS_PER_TICK{ 0.20 };
 //   setup scoreText
 // - params: already specified
 TetrisGame::TetrisGame(sf::RenderWindow& window, sf::Sprite& blockSprite, const Point& gameboardOffset, const Point& nextShapeOffset) : window{ window }, blockSprite{ blockSprite }, gameboardOffset{ gameboardOffset }, nextShapeOffset{ nextShapeOffset } {
+	board.setContent(Gameboard::MAX_X / 2, Gameboard::MAX_Y / 2, 1);
 	currentShape.setShape(Tetromino::getRandomShape());
 	currentShape.setGridLoc(board.getSpawnLoc());
 }
@@ -27,7 +28,7 @@ TetrisGame::TetrisGame(sf::RenderWindow& window, sf::Sprite& blockSprite, const 
 void TetrisGame::draw() {
 	//drawBlock(Point(0, 0), 0, 0, TetColor::BLUE_DARK);
 	//board.setContent(5, 5, 2);
-	//drawGameboard();
+	drawGameboard();
 	drawTetromino(currentShape, gameboardOffset);
 }
 
@@ -49,6 +50,11 @@ void TetrisGame::onKeyPressed(sf::Event keyPressed) {
 		break;
 	case sf::Keyboard::Down:
 		attemptMove(currentShape, 0, 1);
+		break;
+	case sf::Keyboard::Space:
+		drop(currentShape);
+		lock(currentShape);
+
 		break;
 	default:
 		break;
@@ -142,8 +148,10 @@ bool TetrisGame::attemptMove(GridTetromino& shape, int x, int y) {
 //   legally go.  Use attemptMove(). This can be done in 1 line.
 // - param 1: GridTetromino shape
 // - return: nothing;
-void TetrisGame::drop(GridTetromino shape) {
-
+void TetrisGame::drop(GridTetromino& shape) {
+	while (attemptMove(shape, 0, 1)) {
+		shape.move(0,1);
+	}
 }
 
 // copy the contents (color) of the tetromino's mapped block locs to the grid.
@@ -153,8 +161,10 @@ void TetrisGame::drop(GridTetromino shape) {
 	//      to true
 	// - param 1: GridTetromino shape
 	// - return: nothing
-void TetrisGame::lock(GridTetromino shape) {
-
+void TetrisGame::lock(GridTetromino& shape) {
+	std::vector<Point> v = shape.getBlockLocsMappedToGrid();
+	board.setContent(v ,1);
+	shapePlacedSinceLastGameLoop = true;
 }
 
 // Graphics methods ==============================================
@@ -191,7 +201,7 @@ void TetrisGame::drawGameboard() {
 	for (int i{ 0 }; i < board.MAX_X; i++) {
 		for (int j{ 0 }; j < board.MAX_Y; j++) {
 			if (board.getContent(i, j) != board.EMPTY_BLOCK) {
-				drawBlock(Point(0, 0), i, j, TetColor::ORANGE);
+				drawBlock(gameboardOffset, i, j, TetColor::ORANGE);
 			}
 		}
 	}
@@ -244,7 +254,7 @@ bool TetrisGame::isPositionLegal(GridTetromino& shape) const {
 //	         of the grid, but *NOT* the top border (false otherwise)
 bool TetrisGame::isWithinBorders(GridTetromino& shape) const {
 	for (const Point& p : shape.getBlockLocsMappedToGrid()) {
-		if ((p.getX() < 0) || (p.getX() > board.MAX_X) || (p.getY() > board.MAX_Y)) {
+		if ((p.getX() < 0) || (p.getX() >= board.MAX_X) || (p.getY() >= board.MAX_Y)) {
 			return false;
 		}
 	}
