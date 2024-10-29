@@ -15,7 +15,6 @@ const double TetrisGame::MIN_SECONDS_PER_TICK{ 0.20 };
 //   setup scoreText
 // - params: already specified
 TetrisGame::TetrisGame(sf::RenderWindow& window, sf::Sprite& blockSprite, const Point& gameboardOffset, const Point& nextShapeOffset) : window{ window }, blockSprite{ blockSprite }, gameboardOffset{ gameboardOffset }, nextShapeOffset{ nextShapeOffset } {
-    //currentShape =Tetromino::getRandomShape();
 	currentShape.setShape(Tetromino::getRandomShape());
 	currentShape.setGridLoc(board.getSpawnLoc());
 }
@@ -26,7 +25,7 @@ TetrisGame::TetrisGame(sf::RenderWindow& window, sf::Sprite& blockSprite, const 
 // - params: none
 // - return: nothing
 void TetrisGame::draw() {
-	//drawBlock(Point(0, 0), 1, 1, TetColor::BLUE_DARK);
+	//drawBlock(Point(0, 0), 0, 0, TetColor::BLUE_DARK);
 	//board.setContent(5, 5, 2);
 	//drawGameboard();
 	drawTetromino(currentShape, gameboardOffset);
@@ -179,7 +178,7 @@ void TetrisGame::lock(GridTetromino shape) {
 // return: nothing
 void TetrisGame::drawBlock(const Point& topLeft, int xOffset, int yOffset, TetColor color) {
     blockSprite.setTextureRect(sf::IntRect(static_cast<int>(color) * BLOCK_WIDTH, 0, BLOCK_WIDTH, BLOCK_HEIGHT));
-    blockSprite.setPosition(sf::Vector2f(topLeft.getX() + gameboardOffset.getX() + xOffset * BLOCK_WIDTH, topLeft.getY() + gameboardOffset.getY() + yOffset * BLOCK_HEIGHT));
+    blockSprite.setPosition(sf::Vector2f(topLeft.getX()  + xOffset * BLOCK_WIDTH, topLeft.getY() + yOffset * BLOCK_HEIGHT));
     window.draw(blockSprite);
 }
 
@@ -207,7 +206,7 @@ void TetrisGame::drawGameboard() {
 // return: nothing
 void TetrisGame::drawTetromino(GridTetromino& tetromino, const Point& topLeft) {
 	for (Point& p : tetromino.getBlockLocsMappedToGrid()) {
-		drawBlock(topLeft, p.getX(), p.getY(), tetromino.getColor());
+		drawBlock(topLeft, p.getX(), p.getY() , tetromino.getColor());     // whats the point of topleft
 	}
 }
 

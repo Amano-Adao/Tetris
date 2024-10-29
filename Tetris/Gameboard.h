@@ -70,7 +70,7 @@ private:
 	//  ([0][0] is top left, [MAX_Y-1][MAX_X-1] is bottom right) 
 	int grid[MAX_Y][MAX_X];
 	// the gameboard offset to spawn a new tetromino at.
-	const Point spawnLoc{ MAX_X / 2, 0 };
+	const Point spawnLoc{ MAX_X / 2, 0 };  //const Point spawnLoc{ MAX_X / 2, 0 };
 	
 public:	
 	// METHODS -------------------------------------------------

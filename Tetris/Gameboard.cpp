@@ -172,7 +172,7 @@ int Gameboard::removeCompletedRows() {
 // - params: none
 // - returns: a Point, representing our private spawnLoc
 Point Gameboard::getSpawnLoc() {
-	return Point(1, 1);
+	return spawnLoc;
 }
 
 //private:  // This is commented out to allow us to test. 
