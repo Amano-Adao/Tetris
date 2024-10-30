@@ -1,5 +1,6 @@
 #include "TetrisGame.h"
 #include <iostream>
+#include <cassert>
 
 // STATIC CONSTANTS
 const int TetrisGame::BLOCK_WIDTH{ 32 };
@@ -17,6 +18,16 @@ const double TetrisGame::MIN_SECONDS_PER_TICK{ 0.20 };
 TetrisGame::TetrisGame(sf::RenderWindow& window, sf::Sprite& blockSprite, const Point& gameboardOffset, const Point& nextShapeOffset) : window{ window }, blockSprite{ blockSprite }, gameboardOffset{ gameboardOffset }, nextShapeOffset{ nextShapeOffset } {
 	/*currentShape.setShape(Tetromino::getRandomShape());
 	currentShape.setGridLoc(board.getSpawnLoc());*/
+	// setup our font for drawing the score
+	if (!scoreFont.loadFromFile("fonts/RedOctober.ttf"))
+	{
+		assert(false && "Missing font: RedOctober.ttf");
+	};
+	scoreText.setFont(scoreFont);
+	scoreText.setCharacterSize(18);
+	scoreText.setFillColor(sf::Color::White);
+	scoreText.setPosition(425, 325);
+
 	reset();
 	//board.setContent(Gameboard::MAX_X / 2, Gameboard::MAX_Y / 2, 1);
 }
@@ -31,6 +42,8 @@ void TetrisGame::draw() {
 	//board.setContent(5, 5, 2);
 	drawGameboard();
 	drawTetromino(currentShape, gameboardOffset);
+	drawTetromino(nextShape, nextShapeOffset);
+	window.draw(scoreText);
 }
 
 // Event and game loop processing
@@ -78,6 +91,7 @@ void TetrisGame::processGameLoop(float secondsSinceLastLoop) {
 		if (spawnNextShape()) {
 			pickNextShape();
 			score += board.removeCompletedRows();
+			updateScoreDisplay();
 			determineSecondsPerTick();
 		}
 		else {
@@ -258,7 +272,8 @@ void TetrisGame::drawTetromino(GridTetromino& tetromino, const Point& topLeft) {
 // params: none:
 // return: nothing
 void TetrisGame::updateScoreDisplay() {
-
+	std::string scoreStr = "Score: " + std::to_string(score);
+	scoreText.setString(scoreStr);
 }
 
 // State & gameplay/logic methods ================================
