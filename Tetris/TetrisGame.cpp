@@ -300,5 +300,5 @@ bool TetrisGame::isWithinBorders(GridTetromino& shape) const {
 // params: none
 // return: nothing
 void TetrisGame::determineSecondsPerTick() {
-
+	secondsPerTick = MAX_SECONDS_PER_TICK;
 }
