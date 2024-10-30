@@ -168,7 +168,6 @@ int Gameboard::removeCompletedRows() {
 	std::vector<int> v =(getCompletedRowIndices());
 	int count = v.size();
 	removeRows(v);
-	//std::cout << "size:"<<v.size();
 	return count;
 }
 
@@ -245,7 +244,7 @@ void Gameboard::copyRowIntoRow(int sourceRowIndex, int targetRowIndex) {
 // - param 1: an int representing a row index
 // - return: nothing
 void Gameboard::removeRow(int rowIndex) {
-	assert(rowIndex < MAX_Y);
+	//assert(rowIndex < MAX_Y);
 	for (int y{ rowIndex - 1 };y >= 0; y--) {
 		copyRowIntoRow(y, y + 1);
 	}
