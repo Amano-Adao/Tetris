@@ -13,7 +13,6 @@ void Tetromino::setShape(TetShape shape) {
 	switch (shape) {
 	case TetShape::O:
 		blockLocs = { Point(0,0), Point(0,1),Point(1,1),Point(1,0) };
-		
 		break;
 	case TetShape::I:
 		blockLocs = { Point(0,0), Point(0,1),Point(0,2),Point(0,-1) };
@@ -36,9 +35,12 @@ void Tetromino::setShape(TetShape shape) {
 		blockLocs = { Point(0,0), Point(-1,-1),Point(0,1),Point(0,-1) };
 		
 		break;
-	default:
+	case TetShape::T:
 		blockLocs = { Point(0,0), Point(-1,0),Point(1,0),Point(0,-1) };
-		
+
+		break;
+	default:
+		break;
 	}
 
 
