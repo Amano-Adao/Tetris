@@ -15,7 +15,7 @@ const double TetrisGame::MIN_SECONDS_PER_TICK{ 0.20 };
 //   setup scoreText
 // - params: already specified
 TetrisGame::TetrisGame(sf::RenderWindow& window, sf::Sprite& blockSprite, const Point& gameboardOffset, const Point& nextShapeOffset) : window{ window }, blockSprite{ blockSprite }, gameboardOffset{ gameboardOffset }, nextShapeOffset{ nextShapeOffset } {
-	board.setContent(Gameboard::MAX_X / 2, Gameboard::MAX_Y / 2, 1);
+	//board.setContent(Gameboard::MAX_X / 2, Gameboard::MAX_Y / 2, 1);
 	currentShape.setShape(Tetromino::getRandomShape());
 	currentShape.setGridLoc(board.getSpawnLoc());
 }
