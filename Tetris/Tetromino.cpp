@@ -38,11 +38,8 @@ void Tetromino::setShape(TetShape shape) {
 		break;
 	default:
 		blockLocs = { Point(0,0), Point(-1,0),Point(1,0),Point(0,-1) };
-		
+		break;
 	}
-
-
-	
 }
 
 // print a grid to display the current shape

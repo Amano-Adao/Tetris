@@ -148,8 +148,13 @@ void Gameboard::setContent(std::vector<Point>& v, int content) {
 // - return: true if the content at ALL VALID points is EMPTY_BLOCK, false otherwise
 bool Gameboard::areAllLocsEmpty(const std::vector<Point>& v) const {
 	for (const Point& p : v) {
-		if ((!isValidPoint(p)) || (getContent(p) != EMPTY_BLOCK)) {
-			return false;
+		if (isValidPoint(p)) {
+			if (getContent(p) != EMPTY_BLOCK) {
+				return false;
+			}
+		}
+		else {
+			continue;
 		}
 	}
 	return true;
