@@ -27,7 +27,6 @@ TetrisGame::TetrisGame(sf::RenderWindow& window, sf::Sprite& blockSprite, const 
 	scoreText.setCharacterSize(18);
 	scoreText.setFillColor(sf::Color::White);
 	scoreText.setPosition(425, 325);
-
 	reset();
 	//board.setContent(Gameboard::MAX_X / 2, Gameboard::MAX_Y / 2, 1);
 }
@@ -215,7 +214,7 @@ void TetrisGame::drop(GridTetromino& shape) {
 	// - return: nothing
 void TetrisGame::lock(GridTetromino& shape) {
 	std::vector<Point> v = shape.getBlockLocsMappedToGrid();
-	board.setContent(v, 1);
+	board.setContent(v, static_cast<int>(shape.getColor()));
 	shapePlacedSinceLastGameLoop = true;
 }
 
@@ -253,7 +252,7 @@ void TetrisGame::drawGameboard() {
 	for (int i{ 0 }; i < board.MAX_X; i++) {
 		for (int j{ 0 }; j < board.MAX_Y; j++) {
 			if (board.getContent(i, j) != board.EMPTY_BLOCK) {
-				drawBlock(gameboardOffset, i, j, TetColor::ORANGE);
+				drawBlock(gameboardOffset, i, j, static_cast<TetColor>(board.getContent(i,j)));
 			}
 		}
 	}
