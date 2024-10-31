@@ -43,6 +43,7 @@ void TetrisGame::draw() {
 	drawGameboard();
 	drawTetromino(currentShape, gameboardOffset);
 	drawTetromino(nextShape, nextShapeOffset);
+	//drawTetromino(ghostShape, gameboardOffset);
 	window.draw(scoreText);
 }
 
@@ -55,17 +56,21 @@ void TetrisGame::onKeyPressed(sf::Event keyPressed) {
 	{
 	case sf::Keyboard::Up:
 		attemptRotate(currentShape);
+		updateGhostShape();
 		break;
 	case sf::Keyboard::Left:
 		attemptMove(currentShape, -1, 0);
+		updateGhostShape();
 		break;
 	case sf::Keyboard::Right:
 		attemptMove(currentShape, 1, 0);
+		updateGhostShape();
 		break;
 	case sf::Keyboard::Down:
 		if (!attemptMove(currentShape, 0, 1)) {
 			lock(currentShape);
 		};
+		updateGhostShape();
 		break;
 	case sf::Keyboard::Space:
 		drop(currentShape);
@@ -147,6 +152,7 @@ bool TetrisGame::spawnNextShape() {
 	if (isPositionLegal(nextShape)) {
 		currentShape = nextShape;
 		currentShape.setGridLoc(board.getSpawnLoc());
+		//ghostShape.setGridLoc(Point(currentShape.getGridLoc().getX(), board.MAX_Y));
 		return true;
 	}
 	return false;
@@ -276,6 +282,10 @@ void TetrisGame::updateScoreDisplay() {
 	scoreText.setString(scoreStr);
 }
 
+void TetrisGame::updateGhostShape() {
+	ghostShape = currentShape;
+	drop(ghostShape);
+}
 // State & gameplay/logic methods ================================
 
 // Determine if a Tetromino can legally be placed at its current position

@@ -39,6 +39,7 @@ private:
     Gameboard board;			// the gameboard (grid) to represent where all the blocks are.
     GridTetromino nextShape;	// the tetromino shape that is "on deck".
     GridTetromino currentShape;	// the tetromino that is currently falling.
+    GridTetromino ghostShape;	// the ghost of tetromino that is currently falling.
 	
 	// Graphics members ------------------------------------------
 	sf::Sprite& blockSprite;		// the sprite used for all the blocks.
@@ -196,6 +197,10 @@ private:
 	// params: none:
 	// return: nothing
 	void updateScoreDisplay();
+
+
+	// update ghost shape
+	void updateGhostShape();
 
 	// State & gameplay/logic methods ================================
 
